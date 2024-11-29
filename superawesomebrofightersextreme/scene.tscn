@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyrwny0djlbqy"]
+
+[ext_resource type="PackedScene" uid="uid://c42vkiiwsmddc" path="res://guy.tscn" id="1_8d2jw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i4mn7"]
+size = Vector2(14407, 2158)
+
+[node name="main" type="Node2D"]
+
+[node name="stage" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="stage" type="Polygon2D" parent="stage"]
+position = Vector2(-8706.69, -2719.78)
+scale = Vector2(16.8079, 8.72965)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(163, 404, 1022, 404, 952, 577, 586.208, 583.159, 234, 577)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stage"]
+position = Vector2(1247.5, 1885)
+shape = SubResource("RectangleShape2D_i4mn7")
+
+[node name="Guy" parent="." instance=ExtResource("1_8d2jw")]
+position = Vector2(833, 286)
+player = 1
+playerneeded = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(583, -291)
+scale = Vector2(-0.125712, -13.3347)
+zoom = Vector2(0.1, 0.1)

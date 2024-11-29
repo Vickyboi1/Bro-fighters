@@ -1,0 +1,322 @@
+[gd_scene load_steps=30 format=3 uid="uid://c42vkiiwsmddc"]
+
+[ext_resource type="Script" path="res://guy.gd" id="1_icfkb"]
+[ext_resource type="Texture2D" uid="uid://d0j4gs4v28lmu" path="res://tempguysprite.png" id="2_1o2fu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a07st"]
+size = Vector2(716.25, 891)
+
+[sub_resource type="Animation" id="Animation_4alvw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("spriteguy:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Attack1:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Attack1:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_8x3d4"]
+resource_name = "attack"
+length = 1.1965
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("spriteguy:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": ["immobile"],
+"method": &"applystatus"
+}, {
+"args": [Vector2(200, 0)],
+"method": &"applyxforce"
+}, {
+"args": ["immobile"],
+"method": &"clearstatus"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Attack1:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.6, 1.13333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Attack1:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.6, 1.13333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_vsqya"]
+resource_name = "idle"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("spriteguy:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.566667, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_3dbmk"]
+resource_name = "jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("spriteguy:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_xk7s7"]
+resource_name = "run"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("spriteguy:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.266667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kas60"]
+_data = {
+"RESET": SubResource("Animation_4alvw"),
+"attack": SubResource("Animation_8x3d4"),
+"idle": SubResource("Animation_vsqya"),
+"jump": SubResource("Animation_3dbmk"),
+"run": SubResource("Animation_xk7s7")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kbood"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pjt5e"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sn52p"]
+animation = &"jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6jwxq"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3g8d6"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"JUMPING"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lmhub"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"IDLE"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5kibs"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"ATTACKING"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_axgee"]
+break_loop_at_end = true
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tmnw5"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"MOVING"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ytvdy"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"IDLE"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_27tl2"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"ATTACKING"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_25u85"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"ATTACKING"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gvbt5"]
+break_loop_at_end = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pifek"]
+advance_mode = 2
+advance_condition = &"JUMPING"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dvxyl"]
+advance_mode = 2
+advance_condition = &"GROUNDED"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_613hi"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_j7ala"]
+states/End/position = Vector2(959, 130)
+states/Start/position = Vector2(48, 91)
+states/attack/node = SubResource("AnimationNodeAnimation_kbood")
+states/attack/position = Vector2(657, 104)
+states/idle/node = SubResource("AnimationNodeAnimation_pjt5e")
+states/idle/position = Vector2(182, 95)
+states/jump/node = SubResource("AnimationNodeAnimation_sn52p")
+states/jump/position = Vector2(470, 13)
+states/run/node = SubResource("AnimationNodeAnimation_6jwxq")
+states/run/position = Vector2(455, 232)
+transitions = ["idle", "jump", SubResource("AnimationNodeStateMachineTransition_3g8d6"), "jump", "idle", SubResource("AnimationNodeStateMachineTransition_lmhub"), "idle", "attack", SubResource("AnimationNodeStateMachineTransition_5kibs"), "attack", "idle", SubResource("AnimationNodeStateMachineTransition_axgee"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_tmnw5"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_ytvdy"), "jump", "attack", SubResource("AnimationNodeStateMachineTransition_27tl2"), "run", "attack", SubResource("AnimationNodeStateMachineTransition_25u85"), "attack", "End", SubResource("AnimationNodeStateMachineTransition_gvbt5"), "run", "jump", SubResource("AnimationNodeStateMachineTransition_pifek"), "jump", "run", SubResource("AnimationNodeStateMachineTransition_dvxyl"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_613hi")]
+graph_offset = Vector2(-8, -20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xbw1s"]
+size = Vector2(879, 352)
+
+[sub_resource type="Animation" id="Animation_52rro"]
+resource_name = "attack1hit"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [Vector2(0, 0)],
+"method": &"multiplyforce"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2vnfc"]
+_data = {
+"attack1hit": SubResource("Animation_52rro")
+}
+
+[node name="Guy" type="CharacterBody2D"]
+position = Vector2(-47, -3)
+script = ExtResource("1_icfkb")
+friction = null
+acceleration = null
+jumps = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-17, 20.5)
+shape = SubResource("RectangleShape2D_a07st")
+
+[node name="coyotetime" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.2
+one_shot = true
+
+[node name="Cooldowns" type="Node" parent="."]
+
+[node name="1cooldown" type="Timer" parent="Cooldowns"]
+one_shot = true
+
+[node name="spriteguy" type="Sprite2D" parent="."]
+texture = ExtResource("2_1o2fu")
+hframes = 8
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kas60")
+}
+tree_root = SubResource("AnimationNodeStateMachine_j7ala")
+parameters/conditions/ATTACKING = false
+parameters/conditions/GROUNDED = false
+parameters/conditions/IDLE = false
+parameters/conditions/JUMPING = false
+parameters/conditions/MOVING = false
+
+[node name="Attack1" type="Area2D" parent="."]
+auto_translate_mode = 2
+position = Vector2(126, -3)
+monitoring = false
+monitorable = false
+
+[node name="Attack1" type="CollisionShape2D" parent="Attack1"]
+position = Vector2(344, 184)
+shape = SubResource("RectangleShape2D_xbw1s")
+
+[node name="Otheranims" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2vnfc")
+}
+
+[connection signal="area_entered" from="Attack1" to="." method="_on_attack_1_area_entered"]
